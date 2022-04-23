@@ -12,7 +12,9 @@ client.on("interactionCreate", async interaction => {
         return;
     }
 
-    const command = client.commands.get(interaction.commandName);
+    const command = commands.find(command => {
+        command.data.name === interaction.commandName
+    });
     if (!command) {
         return;
     }
