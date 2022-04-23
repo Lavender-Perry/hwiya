@@ -22,7 +22,7 @@ client.on("interactionCreate", async interaction => {
         console.error(error);
         await interaction.reply({content: error.toString(), ephemeral: true});
     }
-}
+});
 
 client.login(process.env.DISCORD_TOKEN);
 
