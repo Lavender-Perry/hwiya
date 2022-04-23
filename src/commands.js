@@ -1,6 +1,6 @@
-import {SlashCommandBuilder} from "@discord.js/builders";
+import {SlashCommandBuilder} from "@discordjs/builders";
 
-export default const commands = [
+const commands = [
     {
         data: new SlashCommandBuilder().setName("safebooru")
             .setDescription("Finds a random image from Safebooru."),
@@ -10,4 +10,5 @@ export default const commands = [
         }
     }
 ];
+export default commands;
 
