@@ -1,10 +1,12 @@
 import {Client, Intents} from "discord.js";
 import commands from "./commands.js";
+import {getPosts} from "./posts.js";
 
 const client = new Client({intents: [Intents.FLAGS.GUILDS]});
 
 client.once("ready", () => {
     console.log("Connected.");
+    getPosts("safebooru");
 });
 
 client.on("interactionCreate", async interaction => {
