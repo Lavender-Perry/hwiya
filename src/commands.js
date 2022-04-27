@@ -12,7 +12,7 @@ const commands = [
             // TODO: actual embed
             await interaction.reply(
                 `https://safebooru.org/images/${post.directory}/${post.image}
-                \n(from https://safebooru.org/index.php?page=post&s=view&id=${post.id}` 
+                \n(from https://safebooru.org/index.php?page=post&s=view&id=${post.id})`
             );
         }
     }
