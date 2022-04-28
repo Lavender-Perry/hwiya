@@ -1,6 +1,7 @@
 import fetch from "node-fetch";
 
 let posts = {
+    e926: undefined,
     safebooru: undefined
 };
 
@@ -8,9 +9,15 @@ export default posts;
 
 async function getPosts(site) {
     const urls = {
-        safebooru: "https://safebooru.org/index.php?page=dapi&s=post&q=index&json=1"
+        e926: "e926.net/posts.json?limit=100",
+        safebooru: "safebooru.org/index.php?page=dapi&s=post&q=index&limit=100&json=1"
     };
-    const ret = await fetch(urls[site]);
+    const ret = await fetch("https://" + urls[site], {
+        method: "GET",
+        headers: {
+            "User-Agent": "Hwiya"
+        }
+    });
     if (!ret.ok) {
         console.log("Error getting " + site + " posts: " + ret.status);
         return;
@@ -20,5 +27,9 @@ async function getPosts(site) {
     setTimeout(getPosts, 3600000, site); // Repeat in 1 hour
 }
 
-getPosts("safebooru");
+for (let key in posts) {
+    getPosts(key);
+}
+
+console.log(posts.e926); // Temporary
 
