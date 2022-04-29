@@ -18,6 +18,10 @@ function newSiteCmd(name, post_data_fn) {
 }
 
 const commands = [
+    newSiteCmd("e926", post => [
+        file[0].url,
+        `https://e926.net/posts/${post.id}`
+    ]),
     newSiteCmd("safebooru", post => [
         `https://safebooru.org/images/${post.directory}/${post.image}`,
         `https://safebooru.org/index.php?page=post&s=view&id=${post.id}`
