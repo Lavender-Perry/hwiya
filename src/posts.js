@@ -22,7 +22,7 @@ async function getPosts(site) {
         console.log("Error getting " + site + " posts: " + ret.status);
         return;
     }
-    posts[site] = await ret.json();
+    posts[site] = site === "e926" ? await ret.json().posts : await ret.json();
 
     setTimeout(getPosts, 3600000, site); // Repeat in 1 hour
 }
