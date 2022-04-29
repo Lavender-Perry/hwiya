@@ -23,6 +23,7 @@ async function getPosts(site) {
         return;
     }
     posts[site] = await ret.json();
+    console.log(posts.e926); // Temporary
 
     setTimeout(getPosts, 3600000, site); // Repeat in 1 hour
 }
@@ -30,6 +31,4 @@ async function getPosts(site) {
 for (let key in posts) {
     getPosts(key);
 }
-
-console.log(posts.e926); // Temporary
 
