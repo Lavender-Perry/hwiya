@@ -12,7 +12,7 @@ const route = process.argv.length >= 4 ?
     Routes.applicationGuildCommands(process.argv[2], process.argv[3]) :
     Routes.applicationCommands(process.argv[2]);
 
-rest.put(route, {})
+rest.put(route, {body: "{}"})
     .then(() => console.log("Successfully cleared commands."))
     .catch(console.error);
 rest.put(route, {body: commands.map(command => command.data.toJSON())})
