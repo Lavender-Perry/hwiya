@@ -1,4 +1,4 @@
-import {SlashCommandBuilder} from "@discordjs/builders";
+import {SlashCommandBuilder, SlashCommandStringOption} from "@discordjs/builders";
 import posts from "./posts.js";
 import {tagStrToTags, filterToTags} from "./tags.js";
 
