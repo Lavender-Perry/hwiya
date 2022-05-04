@@ -1,7 +1,7 @@
 function getTags(post, site) {
     switch (site) {
         case "e926":
-            return post.tags.values().reduce((a, b) => a.concat(b));
+            return Object.values(post.tags).reduce((a, b) => a.concat(b));
         case "safebooru":
             return tagStrToTags(post.tags);
         default:
