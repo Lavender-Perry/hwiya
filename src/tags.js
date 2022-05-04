@@ -12,8 +12,8 @@ function getTags(post, site) {
 export function filterToTags(posts, tags, site) {
     return posts.filter(function(post) {
         const post_tags = getTags(post, site);
-        for (const tag in tags) {
-            if (post_tags.indexOf(tag) === -1) {
+        for (const i in tags) {
+            if (post_tags.indexOf(tags[i]) === -1) {
                 return false;
             }
         }
