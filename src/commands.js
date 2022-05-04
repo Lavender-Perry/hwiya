@@ -1,5 +1,6 @@
 import {SlashCommandBuilder} from "@discordjs/builders";
 import posts from "./posts.js";
+import {tagStrToTags, filterToTags} from "./tags.js";
 
 function newSiteCmd(name, post_data_fn) {
     return {
@@ -7,10 +8,24 @@ function newSiteCmd(name, post_data_fn) {
             .setName(name)
             .setDescription(`Finds a random image from ${name.replace(
                 /\w/, c => c.toUpperCase()
-            )}.`),
+            )}.`)
+            .addStringOption(new SlashCommandStringOption()
+                .setName("tags")
+                .setDescription("The tags the image will have.")
+                .setRequired(false)
+            ),
         async execute(interaction) {
+            const posts_to_use = filterToTags(
+                posts[name],
+                tagStrToTags(interaction.options.getString("tags")),
+                name
+            );
+            if (posts_to_use.length === 0) {
+                await interaction.reply("No posts found with those tags.");
+                return;
+            }
             const post_data = post_data_fn(
-                posts[name][Math.floor(Math.random() * posts[name].length)]
+                posts_to_use[Math.floor(Math.random() * posts_to_use.length)]
             );
             await interaction.reply(`${post_data[0]}\n(from ${post_data[1]})`);
         }
