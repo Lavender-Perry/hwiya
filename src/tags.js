@@ -1,7 +1,7 @@
 function getTags(post, site) {
     switch (site) {
         case "e926":
-            return Object.values(post.tags).reduce((a, b) => a.concat(b));
+            return Object.values(post.tags).flat();
         case "safebooru":
             return tagStrToTags(post.tags);
         default:
@@ -21,5 +21,5 @@ export function filterToTags(posts, tags, site) {
     });
 }
 
-export const tagStrToTags = str => str?.split(" ") ?? [];
+export const tagStrToTags = (str) => str?.split(" ") ?? [];
 

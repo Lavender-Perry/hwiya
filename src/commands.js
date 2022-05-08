@@ -7,7 +7,7 @@ function newSiteCmd(name, post_data_fn) {
         data: new SlashCommandBuilder()
             .setName(name)
             .setDescription(`Finds a random image from ${name.replace(
-                /\w/, c => c.toUpperCase()
+                /\w/, (c) => c.toUpperCase()
             )}.`)
             .addStringOption(new SlashCommandStringOption()
                 .setName("tags")
@@ -40,11 +40,11 @@ function newSiteCmd(name, post_data_fn) {
 }
 
 const commands = [
-    newSiteCmd("e926", post => [
+    newSiteCmd("e926", (post) => [
         `https://e926.net/posts/${post.id}`,
         post.file.url
     ]),
-    newSiteCmd("safebooru", post => [
+    newSiteCmd("safebooru", (post) => [
         `https://safebooru.org/index.php?page=post&s=view&id=${post.id}`,
         `https://safebooru.org/images/${post.directory}/${post.image}`
     ])

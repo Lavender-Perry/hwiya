@@ -14,12 +14,12 @@ const client = new Client({
 
 client.once("ready", () => console.log("Connected."));
 
-client.on("interactionCreate", async interaction => {
+client.on("interactionCreate", async (interaction) => {
     if (!interaction.isCommand) {
         return;
     }
 
-    const command = commands.find(cmd => cmd.data.name === interaction.commandName);
+    const command = commands.find((cmd) => cmd.data.name === interaction.commandName);
     if (!command) {
         return;
     }
