@@ -1,11 +1,18 @@
 import {Client, Intents} from "discord.js";
 import commands from "./commands.js";
 
-const client = new Client({intents: [Intents.FLAGS.GUILDS]});
-
-client.once("ready", () => {
-    console.log("Connected.");
+const client = new Client({
+    presence: {
+        activities: [{
+            name: "images",
+            type: "WATCHING",
+            url: "https://gitdab.com/elle/hwiya"
+        }]
+    },
+    intents: [Intents.FLAGS.GUILDS]
 });
+
+client.once("ready", () => console.log("Connected."));
 
 client.on("interactionCreate", async interaction => {
     if (!interaction.isCommand) {
