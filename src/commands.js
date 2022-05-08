@@ -27,19 +27,26 @@ function newSiteCmd(name, post_data_fn) {
             const post_data = post_data_fn(
                 posts_to_use[Math.floor(Math.random() * posts_to_use.length)]
             );
-            await interaction.reply(`${post_data[0]}\n(from ${post_data[1]})`);
+            await interaction.reply({embeds: [{
+                color: 0x9b75ed,
+                title: "Here is your image!",
+                url: post_data[0],
+                image: {
+                    url: post_data[1],
+                }
+            }]});
         }
     };
 }
 
 const commands = [
     newSiteCmd("e926", post => [
-        post.file.url,
-        `https://e926.net/posts/${post.id}`
+        `https://e926.net/posts/${post.id}`,
+        post.file.url
     ]),
     newSiteCmd("safebooru", post => [
-        `https://safebooru.org/images/${post.directory}/${post.image}`,
-        `https://safebooru.org/index.php?page=post&s=view&id=${post.id}`
+        `https://safebooru.org/index.php?page=post&s=view&id=${post.id}`,
+        `https://safebooru.org/images/${post.directory}/${post.image}`
     ])
 ];
 export default commands;
