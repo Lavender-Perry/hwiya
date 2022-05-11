@@ -1,5 +1,5 @@
 import {SlashCommandBuilder, SlashCommandStringOption} from "@discordjs/builders";
-import posts from "./posts.js";
+import posts, {getPosts} from "./posts.js";
 import {tagStrToTags, filterToTags} from "./tags.js";
 
 function newSiteCmd(name, post_data_fn) {
@@ -15,14 +15,18 @@ function newSiteCmd(name, post_data_fn) {
                 .setRequired(false)
             ),
         async execute(interaction) {
-            const posts_to_use = filterToTags(
+            const tag_str = interaction.options.getString("tags");
+            let posts_to_use = filterToTags(
                 posts[name],
-                tagStrToTags(interaction.options.getString("tags")),
+                tagStrToTags(tag_str),
                 name
             );
             if (posts_to_use.length === 0) {
-                await interaction.reply("No posts found with those tags.");
-                return;
+                posts_to_use = await getPosts(name, tag_str);
+                if (posts_to_use.length === 0) {
+                    await interaction.reply("No posts found with those tags.");
+                    return;
+                }
             }
             const post_data = post_data_fn(
                 posts_to_use[Math.floor(Math.random() * posts_to_use.length)]
