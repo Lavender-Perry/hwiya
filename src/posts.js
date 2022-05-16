@@ -1,18 +1,25 @@
 import fetch from "node-fetch";
 
-let posts = {
-    e926: undefined,
-    safebooru: undefined
+export const sites = {
+    e926: {
+        url: "e926.net/posts.json?limit=100",
+        getURLs: (post) => ({
+            post: `https://e926.net/posts/${post.id}`,
+            file: post.file.url
+        })
+    },
+    safebooru: {
+        url: "safebooru.org/index.php?page=dapi&s=post&q=index&limit=100&json=1",
+        getURLs: (post) => ({
+            post: `https://safebooru.org/index.php?page=post&s=view&id=${post.id}`,
+            file: `https://safebooru.org/images/${post.directory}/${post.image}`
+        })
+    }
 };
-
-export default posts;
+export let posts = {};
 
 export async function getPosts(site, tags = "") {
-    const urls = {
-        e926: "e926.net/posts.json?limit=100",
-        safebooru: "safebooru.org/index.php?page=dapi&s=post&q=index&limit=100&json=1"
-    };
-    const ret = await fetch("https://" + urls[site] + "&tags=" + tags, {
+    const ret = await fetch("https://" + sites[site].url + "&tags=" + tags, {
         method: "GET",
         headers: {
             "User-Agent": "Hwiya"
@@ -36,9 +43,5 @@ export async function getPosts(site, tags = "") {
     }
     posts[site] = rec_posts;
     setTimeout(getPosts, 3600000, site); // Repeat in 1 hour
-}
-
-for (let key in posts) {
-    getPosts(key);
 }
 

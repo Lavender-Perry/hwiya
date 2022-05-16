@@ -1,5 +1,10 @@
 import {Client, Intents} from "discord.js";
 import commands from "./commands.js";
+import {sites, getPosts} from "./posts.js";
+
+for (let key in sites) {
+    getPosts(key);
+}
 
 const client = new Client({
     presence: {
