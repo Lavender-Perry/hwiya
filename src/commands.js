@@ -15,11 +15,7 @@ export default Object.keys(sites).map((name) => ({
         ),
     async execute(interaction, posts) {
         const tag_str = interaction.options.getString("tags");
-        let posts_to_use = filterToTags(
-            posts,
-            tagStrToTags(tag_str),
-            name
-        );
+        let posts_to_use = filterToTags(posts, tagStrToTags(tag_str), name);
         if (posts_to_use.length === 0) {
             posts_to_use = await getPosts(name, tag_str);
             if (posts_to_use.length === 0) {

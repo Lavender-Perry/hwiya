@@ -5,7 +5,7 @@ import {sites, getPosts} from "./posts.js";
 let posts = {};
 
 for (let key in sites) {
-    posts[key] = getPosts(key);
+    posts[key] = await getPosts(key);
     setInterval(() => posts[key] = getPosts(key), 3600000); // Repeat every hour
 }
 
