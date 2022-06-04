@@ -16,7 +16,6 @@ export const sites = {
         })
     }
 };
-export let posts = {};
 
 export async function getPosts(site, tags = "") {
     const ret = await fetch("https://" + sites[site].url + "&tags=" + tags, {
@@ -30,18 +29,11 @@ export async function getPosts(site, tags = "") {
         return;
     }
 
-    let rec_posts;
     try {
-        rec_posts = site === "e926" ? (await ret.json()).posts : await ret.json();
+        return site === "e926" ? (await ret.json()).posts : await ret.json();
     }
     catch {
-        rec_posts = [];
+        return [];
     }
-
-    if (tags !== "") {
-        return rec_posts;
-    }
-    posts[site] = rec_posts;
-    setTimeout(getPosts, 3600000, site); // Repeat in 1 hour
 }
 

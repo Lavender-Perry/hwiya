@@ -1,5 +1,5 @@
 import {SlashCommandBuilder, SlashCommandStringOption} from "@discordjs/builders";
-import {sites, posts, getPosts} from "./posts.js";
+import {sites, getPosts} from "./posts.js";
 import {tagStrToTags, filterToTags} from "./tags.js";
 
 export default Object.keys(sites).map((name) => ({
@@ -13,10 +13,10 @@ export default Object.keys(sites).map((name) => ({
             .setDescription("The tags the image will have.")
             .setRequired(false)
         ),
-    async execute(interaction) {
+    async execute(interaction, posts) {
         const tag_str = interaction.options.getString("tags");
         let posts_to_use = filterToTags(
-            posts[name],
+            posts,
             tagStrToTags(tag_str),
             name
         );

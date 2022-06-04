@@ -2,8 +2,11 @@ import {Client, Intents} from "discord.js";
 import commands from "./commands.js";
 import {sites, getPosts} from "./posts.js";
 
+let posts = {};
+
 for (let key in sites) {
-    getPosts(key);
+    posts[key] = getPosts(key);
+    setInterval(() => posts[key] = getPosts(key), 3600000); // Repeat every hour
 }
 
 const client = new Client({
@@ -29,7 +32,7 @@ client.on("interactionCreate", async (interaction) => {
         return;
     }
     try {
-        await command.execute(interaction);
+        await command.execute(interaction, posts[interaction.commandName]);
     } catch (error) {
         console.error(error);
         await interaction.reply({content: error.toString(), ephemeral: true});
