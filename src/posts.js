@@ -1,5 +1,18 @@
 import fetch from "node-fetch";
 
+class Booru {
+    constructor(base_url) {
+        this.base_url = base_url;
+        this.url = base_url + "/index.php?page=dapi&s=post&q=index&limit=100&json=1";
+    }
+    getURLs(post) {
+        return {
+            post: `https://${this.base_url}/index.php?page=post&s=view&id=${post.id}`,
+            file: `https://${this.base_url}/images/${post.directory}/${post.image}`
+        }
+    }
+}
+
 export const sites = {
     e926: {
         url: "e926.net/posts.json?limit=100",
@@ -8,13 +21,8 @@ export const sites = {
             file: post.file.url
         })
     },
-    safebooru: {
-        url: "safebooru.org/index.php?page=dapi&s=post&q=index&limit=100&json=1",
-        getURLs: (post) => ({
-            post: `https://safebooru.org/index.php?page=post&s=view&id=${post.id}`,
-            file: `https://safebooru.org/images/${post.directory}/${post.image}`
-        })
-    }
+    mspabooru: new Booru("mspabooru.com"),
+    safebooru: new Booru("safebooru.org")
 };
 
 export async function getPosts(site, tags = "") {
