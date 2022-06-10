@@ -6,9 +6,8 @@ let posts = {};
 
 for (let key in sites) {
     posts[key] = await getPosts(key);
-    setInterval(async function() {
-        posts[key] = await getPosts(key);
-    }, 3600000); // Repeat every hour
+    // Repeat every hour
+    setInterval(async () => posts[key] = await getPosts(key), 3600000);
 }
 
 const client = new Client({
