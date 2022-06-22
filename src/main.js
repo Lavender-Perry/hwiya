@@ -15,7 +15,7 @@ const client = new Client({
         activities: [{
             name: "images",
             type: "WATCHING",
-            url: "https://gitdab.com/elle/hwiya"
+            url: "https://github.com/Lavender-Perry/hwiya"
         }]
     },
     intents: [Intents.FLAGS.GUILDS]
@@ -33,7 +33,10 @@ client.on("interactionCreate", async (interaction) => {
         return;
     }
     try {
-        await command.execute(interaction, posts[interaction.commandName]);
+        await command.execute(
+            interaction,
+            command.data.name === "all" ? posts : posts[command.data.name]
+        );
     } catch (error) {
         console.error(error);
         await interaction.reply({content: error.toString(), ephemeral: true});
