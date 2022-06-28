@@ -46,17 +46,16 @@ export default site_commands.concat({
         .setDescription("Finds a random image from all sites.")
         .addStringOption(tag_option),
     async execute(interaction, posts) {
-        const post_sites = Object.keys(posts);
         const tag_str = interaction.options.getString("tags");
         let posts_to_use = {};
         for (let [key, value] of Object.entries(posts)) {
             const filtered_posts = filterToTags(value, tag_str, key);
-            if (posts.length !== 0) {
+            if (filtered_posts.length !== 0) {
                 posts_to_use[key] = filtered_posts;
             }
         }
         if (posts_to_use === {}) {
-            for (let key of post_sites) {
+            for (let key of Object.keys(sites)) {
                 let filtered_posts = await getPosts(key, tag_str);
                 if (filtered_posts.length !== 0) {
                     posts_to_use[key] = filtered_posts;
@@ -68,7 +67,8 @@ export default site_commands.concat({
             }
         }
 
-        const site = post_sites[Math.floor(Math.random() * post_sites.length)];
+        const sites_to_use = Object.keys(posts_to_use);
+        const site = sites_to_use[Math.floor(Math.random() * sites_to_use.length)];
         await post_random(posts_to_use[site], site, interaction);
     }
 });
